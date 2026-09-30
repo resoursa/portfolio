@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+@import '@appica/ui-react/styles.css';
+
+@source '../../node_modules/@appica/ui-react/dist';
+
+/*
+ * Theme overrides. Only raw tokens are redefined here (see the appica-ui skill);
+ * Appica maps them to the light/dark `--color-*` tokens itself.
+ *
+ * Secondary = Black Sea petrol blue, used sparingly for "live" signals:
+ * the current role, availability, link hovers.
+ */
+:root {
+  --font-sans: var(--font-commissioner), ui-sans-serif, system-ui, sans-serif;
+  --radius: 0.75rem;
+
+  --secondary: oklch(0.6 0.105 222);
+  --secondary-subtle: oklch(0.6 0.105 222 / 10%);
+  --secondary-soft: oklch(0.6 0.105 222 / 20%);
+  --secondary-muted: oklch(0.72 0.09 220);
+  --secondary-strong: oklch(0.53 0.1 224);
+  --secondary-emphasis: oklch(0.5 0.1 225);
+  --secondary-intense: oklch(0.43 0.09 227);
+  --secondary-foreground: oklch(1 0 0);
+}
+
+.dark {
+  --secondary: oklch(0.72 0.1 218);
+  --secondary-subtle: oklch(0.72 0.1 218 / 12%);
+  --secondary-soft: oklch(0.72 0.1 218 / 22%);
+  --secondary-muted: oklch(0.6 0.09 220);
+  --secondary-strong: oklch(0.78 0.09 216);
+  --secondary-emphasis: oklch(0.8 0.09 215);
+  --secondary-intense: oklch(0.87 0.07 212);
+  --secondary-foreground: oklch(0.2 0.03 230);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground font-sans antialiased;
+}
+
+/*
+ * The hero name: Commissioner at full flair and volume. It draws in from the
+ * plain cut once on load. This is the page's only ambient motion.
+ */
+@keyframes flair-in {
+  from {
+    font-variation-settings: 'FLAR' 0, 'VOLM' 0;
+  }
+  to {
+    font-variation-settings: 'FLAR' 100, 'VOLM' 100;
+  }
+}
+
+.name-flair {
+  font-variation-settings: 'FLAR' 100, 'VOLM' 100;
+  animation: flair-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name-flair {
+    animation: none;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .name-flair {
+    animation: none;
+  }
+}
